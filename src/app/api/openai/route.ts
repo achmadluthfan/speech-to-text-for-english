@@ -37,16 +37,24 @@ const prompt = "";
 export async function POST(request: Request) {
   const audio = await request.blob();
   const file = new File([audio], "audio.webm", { type: "audio/webm" });
-  console.log("file", file);
+  // console.log("file", file);
 
   const transcriptions = await client.audio.transcriptions.create({
     file: file,
     model: "whisper-1",
     language: "en",
-    response_format: "srt",
+    response_format: "verbose_json",
     // prompt: prompt,
   });
 
   console.log("data type", typeof transcriptions);
   console.log("transcriptions", transcriptions);
+  console.log(
+    "transcriptions.segments.tokens[0]",
+    transcriptions.segments?.[0].tokens
+  );
+  console.log(
+    "transcriptions.segments.tokens[1]",
+    transcriptions.segments?.[1].tokens
+  );
 }
