@@ -9,8 +9,8 @@ export interface FeedbackOptions {
 }
 
 export interface AnalysisResult {
-  pronunciation: string | null;
+  // pronunciation: string | null;
   vocabulary: string | null;
   grammar: string | null;
-  fluency: string | null;
+  // fluency: string | null;
 }
