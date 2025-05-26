@@ -5,12 +5,17 @@ export interface RecordingState {
 }
 
 export interface FeedbackOptions {
-  language: "english" | "indonesian";
+  language: "english" | "indonesia";
+}
+
+interface SuggestionItem {
+  suggestion: string;
+  word: string;
 }
 
 export interface AnalysisResult {
   // pronunciation: string | null;
-  vocabulary: string | null;
-  grammar: string | null;
+  vocabulary: SuggestionItem[] | null;
+  grammar: SuggestionItem[] | null;
   // fluency: string | null;
 }

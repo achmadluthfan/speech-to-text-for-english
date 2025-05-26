@@ -13,10 +13,10 @@ export default function SpeechAnalysisTool() {
     language: "english",
   });
   const [analysisResults, setAnalysisResults] = useState<AnalysisResult>({
-    pronunciation: null,
+    // pronunciation: null,
     vocabulary: null,
     grammar: null,
-    fluency: null,
+    // fluency: null,
   });
   const [isAnalyzing, setIsAnalyzing] = useState(false);
 
@@ -35,7 +35,7 @@ export default function SpeechAnalysisTool() {
   const handleAnalyze = async () => {
     setIsAnalyzing(true);
     try {
-      const results = await analyzeSpeech(audioUrl);
+      const results = await analyzeSpeech(audioUrl, feedbackOptions.language);
       setAnalysisResults(results);
       console.log("Analysis complete!");
     } catch (error) {

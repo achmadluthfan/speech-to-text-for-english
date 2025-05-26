@@ -2,7 +2,8 @@ import { toast } from "react-hot-toast";
 import type { AnalysisResult } from "@/types";
 
 export const analyzeSpeech = async (
-  audioUrl: string | null
+  audioUrl: string | null,
+  language: "english" | "indonesia"
 ): Promise<AnalysisResult> => {
   if (audioUrl) {
     try {
@@ -25,19 +26,26 @@ export const analyzeSpeech = async (
         throw new Error("Failed to transcribe audio");
       }
 
-      const data = await apiResponse.text();
+      const dataTranscribe = await apiResponse.text();
 
       const chatCompletion = await fetch("/api/chat", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ message: data }),
+        body: JSON.stringify({
+          message: dataTranscribe,
+          output_language: language,
+        }),
       });
 
+      const dataAnalyze = await chatCompletion.json();
+
+      console.log("vocab", dataAnalyze.vocabulary);
+
       return {
-        vocabulary: data,
-        grammar: data,
+        vocabulary: dataAnalyze.vocabulary,
+        grammar: dataAnalyze.grammar,
       };
     } catch (error) {
       // console.error("Error analyzing speech:", error);

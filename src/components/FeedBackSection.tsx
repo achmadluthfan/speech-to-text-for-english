@@ -54,12 +54,12 @@ export function FeedbackSection({
             <input
               type="radio"
               name="language"
-              value="indonesian"
-              checked={feedbackOptions.language === "indonesian"}
+              value="indonesia"
+              checked={feedbackOptions.language === "indonesia"}
               onChange={() =>
                 onFeedbackOptionsChange({
                   ...feedbackOptions,
-                  language: "indonesian",
+                  language: "indonesia",
                 })
               }
               className="w-4 h-4 text-blue-600"
@@ -107,7 +107,7 @@ export function FeedbackSection({
           <p className="font-semibold mb-4">Analysis Results:</p>
 
           <div className="space-y-4">
-            <div className="p-4 border border-gray-200 rounded-lg">
+            {/* <div className="p-4 border border-gray-200 rounded-lg">
               <div className="flex items-center gap-2 mb-2">
                 <Volume2 className="w-5 h-5 text-blue-600" />
                 <span className="font-medium">Pronunciation</span>
@@ -116,7 +116,7 @@ export function FeedbackSection({
                 {analysisResults.pronunciation ||
                   'No data yet. Click "Analyze My Speaking" to get feedback.'}
               </p>
-            </div>
+            </div> */}
 
             <div className="p-4 border border-gray-200 rounded-lg">
               <div className="flex items-center gap-2 mb-2">
@@ -134,13 +134,15 @@ export function FeedbackSection({
                 <Type className="w-5 h-5 text-purple-600" />
                 <span className="font-medium">Grammar</span>
               </div>
-              <p className="text-gray-600">
-                {analysisResults.grammar ||
+              {/* <p className="text-gray-600">
+                {analysisResults.grammar.map(value => {
+                  return
+                }) ||
                   'No data yet. Click "Analyze My Speaking" to get feedback.'}
-              </p>
+              </p> */}
             </div>
 
-            <div className="p-4 border border-gray-200 rounded-lg">
+            {/* <div className="p-4 border border-gray-200 rounded-lg">
               <div className="flex items-center gap-2 mb-2">
                 <Clock className="w-5 h-5 text-orange-600" />
                 <span className="font-medium">Fluency</span>
@@ -149,7 +151,7 @@ export function FeedbackSection({
                 {analysisResults.fluency ||
                   'No data yet. Click "Analyze My Speaking" to get feedback.'}
               </p>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

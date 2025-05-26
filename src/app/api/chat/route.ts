@@ -4,41 +4,52 @@ const client = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
-const prompt = `You are an English teacher that is helping a student to improve their English grammar and vocabulary. You will be sent data in audio format and you will need to analyze and return precise, actionable feedback on which parts of the student's English grammar or vocabulary need improvement, based on their speech. For Example:
-{
-  'grammar': {
-    {
-        'type': 'subject-verb agreement',
-        'example': 'She go to school every day.',
-        'suggestion': 'Use "goes" instead of "go" — "She goes to school every day."'
-      },
-      {
-        'type': 'article usage',
-        'example': 'I saw elephant.',
-        'suggestion': 'Use "an" before vowel sounds — "I saw an elephant."'
-      }
-  },
-  'vocabulary': {
-    {
-        'type': 'word choice',
-        'example': 'I was very boring in the party.',
-        'suggestion': 'Use "bored" instead of "boring" to describe your feeling — "I was very bored at the party."'
-      },
-      {
-        'type': 'repetition',
-        'example': 'I like it because it is good. It is really good. Good food is good.',
-        'suggestion': 'Try using synonyms like "delicious", "tasty", or "enjoyable" to add variety.'
-      }
-  }
-}`;
-
 export async function POST(request: Request) {
   try {
-    const { message } = await request.json();
+    const { message, output_language } = await request.json();
+
+    const prompt = `You are an English teacher helping a student improve their spoken English skills, focusing on grammar and vocabulary.
+
+    You will receive a text in English that represents a spoken utterance from the student. Your task is to return a JSON-formatted response that analyzes the student's grammar and vocabulary. Provide clear and actionable suggestions for improvement, along with corrected examples. Your response must adapt based on the value of the output_language variable as follows:
+
+    - If output_language is set to "english", all suggestions and explanations must be in English.
+    - If output_language is set to "indonesia", all suggestions and explanations must be translated into Indonesian.
+
+    The response must follow this JSON structure:
+    {
+       "output_language": ${output_language},
+      "grammar": [
+        {
+          "example": "<original student sentence with error>",
+          "suggestion": "<correction and explanation>"
+        },
+        {
+          "example": "<another sentence with error>",
+          "suggestion": "<correction and explanation>"
+        }
+      ],
+      "vocabulary": [
+        {
+          "word": "<used word or phrase>",
+          "suggestion": "<a more accurate or natural word/phrase, with explanation>"
+        }
+      ]
+    }`;
 
     const chatCompletion = await client.chat.completions.create({
       model: "gpt-3.5-turbo",
-      messages: [{ role: "user", content: message }],
+      messages: [
+        { role: "system", content: prompt },
+        { role: "user", content: message },
+      ],
+      response_format: { type: "json_object" },
+    });
+
+    return new Response(chatCompletion.choices[0].message.content, {
+      status: 200,
+      headers: {
+        "Content-Type": "application/json",
+      },
     });
   } catch (error) {
     console.error("Error in chat route:", error);
