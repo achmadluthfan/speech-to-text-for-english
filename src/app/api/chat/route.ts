@@ -20,18 +20,12 @@ export async function POST(request: Request) {
        "output_language": ${output_language},
       "grammar": [
         {
-          "example": "<original student sentence with error>",
-          "suggestion": "<correction and explanation>"
-        },
-        {
-          "example": "<another sentence with error>",
-          "suggestion": "<correction and explanation>"
+           "explanation": "<explanation of the suggestion>"
         }
       ],
       "vocabulary": [
         {
-          "word": "<used word or phrase>",
-          "suggestion": "<a more accurate or natural word/phrase, with explanation>"
+          "explanation": "<explanation of the suggestion>"
         }
       ]
     }`;

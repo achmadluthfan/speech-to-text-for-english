@@ -118,28 +118,38 @@ export function FeedbackSection({
               </p>
             </div> */}
 
-            <div className="p-4 border border-gray-200 rounded-lg">
-              <div className="flex items-center gap-2 mb-2">
-                <BookOpen className="w-5 h-5 text-green-600" />
-                <span className="font-medium">Vocabulary</span>
+            {analysisResults.vocabulary!.length > 0 && (
+              <div className="p-4 border border-gray-200 rounded-lg">
+                <div className="flex items-center gap-2 mb-2">
+                  <BookOpen className="w-5 h-5 text-green-600" />
+                  <span className="font-medium">Vocabulary</span>
+                </div>
+                <ul className="text-gray-600">
+                  {analysisResults.vocabulary!.map((item) => {
+                    return (
+                      <li className="list-disc list-inside">
+                        {item.explanation}
+                      </li>
+                    );
+                  })}
+                </ul>
               </div>
-              <p className="text-gray-600">
-                {analysisResults.vocabulary ||
-                  'No data yet. Click "Analyze My Speaking" to get feedback.'}
-              </p>
-            </div>
+            )}
 
             <div className="p-4 border border-gray-200 rounded-lg">
               <div className="flex items-center gap-2 mb-2">
                 <Type className="w-5 h-5 text-purple-600" />
                 <span className="font-medium">Grammar</span>
               </div>
-              {/* <p className="text-gray-600">
-                {analysisResults.grammar.map(value => {
-                  return
-                }) ||
-                  'No data yet. Click "Analyze My Speaking" to get feedback.'}
-              </p> */}
+              <ul className="text-gray-600">
+                {analysisResults.grammar!.map((item) => {
+                  return (
+                    <li className="list-disc list-inside">
+                      {item.explanation}
+                    </li>
+                  );
+                })}
+              </ul>
             </div>
 
             {/* <div className="p-4 border border-gray-200 rounded-lg">

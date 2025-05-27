@@ -14,8 +14,8 @@ export default function SpeechAnalysisTool() {
   });
   const [analysisResults, setAnalysisResults] = useState<AnalysisResult>({
     // pronunciation: null,
-    vocabulary: null,
-    grammar: null,
+    vocabulary: [],
+    grammar: [],
     // fluency: null,
   });
   const [isAnalyzing, setIsAnalyzing] = useState(false);
@@ -36,8 +36,16 @@ export default function SpeechAnalysisTool() {
     setIsAnalyzing(true);
     try {
       const results = await analyzeSpeech(audioUrl, feedbackOptions.language);
+
+      toast.promise(Promise.resolve(results), {
+        loading: "Analyzing speech...",
+        success: "Analysis complete!",
+        error: "An unexpected error occurred",
+      });
+
+      console.log("results", results);
+
       setAnalysisResults(results);
-      console.log("Analysis complete!");
     } catch (error) {
       if (error instanceof Error) {
         toast.error(error.message);

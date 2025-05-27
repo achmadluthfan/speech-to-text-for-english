@@ -9,8 +9,9 @@ export interface FeedbackOptions {
 }
 
 interface SuggestionItem {
-  suggestion: string;
-  word: string;
+  // word: string;
+  // suggestion: string;
+  explanation: string;
 }
 
 export interface AnalysisResult {
